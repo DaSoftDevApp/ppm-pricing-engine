@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  sku           String   @unique
+  currentPrice  Float
+  supplierId    String
+  lastUpdatedAt DateTime @updatedAt
+}
+
+model PriceUpdateHistory {
+  id          String   @id @default(uuid())
+  productId   String
+  oldPrice    Float
+  newPrice    Float
+  status      String   // "VALIDATED" ou "REJECTED"
+  reason      String?
+  requestedAt DateTime @default(now())
+}
